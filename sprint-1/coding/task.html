@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+</head>
+<style>
+    
+     button {
+        width: 100px;
+        height: 50px;
+        background-color:rgb(11, 128, 67);
+        color: white;
+        font-size: 24px;
+        font-weight: 500;
+        border-radius: 6px;
+       
+    }
+    input {
+      width: 200px;
+      height: 30px;
+    }
+ 
+    #main {
+        background-color: #e3e4e4;
+        margin-left: 20px;
+        padding: 10px;
+    }
+</style>
+
+<body>
+    <div id="main">
+          
+        <h2>Task</h2>
+        <input type=text id="enter" placeholder="Enter Your Task">
+
+        <button onclick="submit()">Submit</button>
+      
+</div>
+        <div></div>
+  
+</body>
+
+</html>
+
+<script>
+
+   function result(n) { 
+        
+        this.name = n;
+        this.date = Date()
+        this.status = true;
+
+    }
+
+  function submit() {
+
+        var tasks = document.getElementById("enter").value;
+        var data =  new result(tasks)
+
+        var div = document.querySelector('div')
+
+        var taggle = document.createElement('p')
+        taggle.textContent = data.name
+
+        var date = document.createElement('p')
+        date.textContent = data.date
+
+        var status = document.createElement('p')
+        status.textContent = data.status
+
+
+
+        div.append(taggle, date, status)
+
+       
+    
+    }
+</script>

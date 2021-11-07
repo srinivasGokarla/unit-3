@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Array-III</title>
+</head>
+<body>
+    <h1>Custom Array-3</h1>
+</body>
+</html>
+<script>
+
+  var myn = new Personal("Srinivas", "Gokarla", 26, "Vizag");
+
+
+  function Personal() {
+
+    Object.defineProperty(this, "length",  {
+        value : 0,
+        writable : true,
+        enumerable : false,
+    })
+    
+     this.length = arguments.length;
+     for(var i = 0; i < this.length; i++) {
+   this[i] = arguments[i]
+     }
+    
+  }
+
+  Personal.prototype.push = function(value) {
+      let index = this.length;
+      this[index] = value;
+       this.length++;
+
+  };
+
+
+myn.push("Btech")
+myn.push("Mechanical")
+
+Array.prototype.reverse.call(myn)
+console.log(myn)
+
+  console.log(myn[0])
+</script>

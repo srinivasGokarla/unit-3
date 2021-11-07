@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inheritance</title>
+</head>
+<body>
+    <h1>Family</h1>
+</body>
+</html>
+<script>
+   var  Gokarla = {
+  family: function() {
+    console.log(this);
+  }
+};
+
+let my = Object.create(Gokarla);
+my.grandfather = "Sriramulu";
+my.grandmother = "Dalamma";
+my.father = "Ramarao";
+my.mother = "Yasodha";
+my.brother = "Sivakumar";
+my.name = "Srinivas";
+my.sister = "Deepthi";
+
+
+my.family();
+
+
+
+</script>
