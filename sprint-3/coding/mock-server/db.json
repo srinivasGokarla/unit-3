@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Jon Doe",
+      "age": 30,
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "Jane Doe",
+      "age": 25,
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "Bob Taylor",
+      "age": 45,
+      "active": false
+    }
+  ]
+}
