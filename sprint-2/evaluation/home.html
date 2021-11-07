@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News App</title>
+</head>
+<style>
+    #news {
+       display: grid; 
+       grid-template-columns: repeat(2,45%);
+       grid-gap: 5%;
+
+    }
+    img {
+        width: 20%;
+    }
+
+</style>
+<body>
+    <img src="https://download.logo.wine/logo/TechCrunch/TechCrunch-Logo.wine.png"/>
+   <a href="home.html"><h1>techcruch</h1></a> <br><br>
+    <input type="text" id="query" placeholder="search for a news">
+    <button onclick="getNews()">search</button>
+    <h2>Login</h2>
+    <h2>Search</h2>
+    <h2>Videos</h2>
+    <h2>Disrupt</h2>
+    <h2>Audio</h2>
+    <h2>Newsletters</h2>
+    <h2>Advertise</h2>
+    <div id="news"></div>
+</body>
+</html>
+<script>
+    //d9efc110d5b04503886275a5ff3c75af
+let news_div =  document.getElementById("news")
+
+
+async function getNews() {
+
+
+let query = document.getElementById("query").value;
+
+let res = await fetch(`http://newsapi.org/v2/everything?q=apple&from=2021-09-18&sortBy=popularity&apiKey=d9efc110d5b04503886275a5ff3c75af`)
+
+let data = await res.json();
+console.log(data)
+appendNews()
+}
+getNews()
+
+function appendNews(news) {
+  if(news === undefined) {
+      return false;
+  }
+  news_div.innerHTML =  null;
+news.forEach(function(query) {
+    let p = document.createElement("p")
+    p.innerText = news.title;
+
+    news_div.append(p)
+})
+}
+async function main() {
+let res = await getNews(name);
+let query_data = res.Search;
+
+appendNews(query_data)
+console.log(res)
+}
+</script>

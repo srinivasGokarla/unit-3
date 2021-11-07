@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search Engine II </title>
+</head>
+<body>
+    <h1>Movies</h1>
+    <input type="text" id="movie" placeholder="Enter movie name"/>
+    <button onclick="getMovie()">submit</button>
+    <div id ="data"></div>
+</body>
+</html>
+<script>
+    
+    let container =document.getElementById("data");
+
+async function getMovie() {
+
+   let movie = document.getElementById("movie").value;
+
+   
+   let res =  await fetch(`http://www.omdbapi.com/?apikey=2e11846f&t=${movie}`);
+
+  let data = await res.json();
+
+  console.log(data);
+
+  showMovie(data);
+}
+
+function showMovie(movie){
+
+   container.innerText = null;
+ 
+   let name = document.createElement("p");
+   name.innerText = "Title:" + movie.Title;
+
+   let img = document.createElement("img");
+   img.src = movie.Poster;
+
+   let Director = document.createElement("p");
+   Director.innerText = "Director:" + movie.Director;
+
+   let Runtime = document.createElement("p");
+   Runtime.innerText = "Runtime: " + movie.Runtime;
+
+   let Genre = document.createElement("p");
+    Genre.innerText = "Genre: " +movie.Genre;
+
+    let imdbRating = document.createElement("p");
+    imdbRating.innerText = "imdbRating: " + movie.imdbRating;
+
+    let Language = document.createElement("p");
+    Language.innerText = "Language: " + movie.Language;
+    
+    let Country = document.createElement("p");
+    Country.innerText = "Country: " + movie.Country;
+
+    let Production = document.createElement("p");
+    Production.innerText = "Production: " + movie.Production;
+
+    let Released = document.createElement("p");
+    Released.innerText = "Released: " + movie.Released;
+
+
+    if(movie.Title=== undefined){
+    name.innerText = "error This movie is not made yet";
+    name.style.color = "blue";
+    name.style.fontWeight = "600";
+    name.style.fontSize = "40px"
+    
+    img.style.width = "500px"
+    Country.innerText = ""; 
+    Director.innerText = "";
+    Genre.innerText = "";
+    Language.innerText ="";
+    Released.innerText = "";
+    imdbRating.innerText = "";
+    Runtime.innerText ="";
+    Production.innerText = "";   
+}
+
+   container.append(name,img,Director,Runtime,Genre,imdbRating,Language,Country,Production,Released)
+}
+
+  </script>

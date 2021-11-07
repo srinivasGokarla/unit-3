@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>search</title>
+</head>
+<style>
+      #news {
+       display: grid; 
+       grid-template-columns: repeat(2,45%);
+       grid-gap: 5%;
+
+    }
+    img {
+        width: 20%;
+    }
+
+</style>
+<body>
+    <div>
+    <img src="https://download.logo.wine/logo/TechCrunch/TechCrunch-Logo.wine.png"/>
+   <a href="home.html"><h1>techcruch</h1></a> <br><br>
+    <input type="text" id="news" placeholder="search movies"/>
+    <button onclick="searchNews()">search</button>
+    <h2>Login</h2>
+    <h2>Search</h2>
+    <h2>Videos</h2>
+    <h2>Disrupt</h2>
+    <h2>Audio</h2>
+    <h2>Newsletters</h2>
+    <h2>Advertise</h2>
+    <div id="news"></div>
+  <div id="News"></div>
+</div>
+</body>
+</html>
+<script>
+   let container = document.getElementById("News")
+    async function searchNews(){
+     let query = document.getElementById("news").value;
+
+   let res = await fetch(`http://newsapi.org/v2/everything?qInTitle=${query}&from=2021-10-17&to=2021-09-18&sortBy=popularity&apiKey=d9efc110d5b04503886275a5ff3c75af`)
+    
+    let News = await res.json();
+    shownews(News)
+    console.log(News)
+    }
+   
+   function shownews(news){
+       container.innerHTML = null;
+       let name = document.createElement("p");
+       name.innerText = news.articles[0].author;
+       let img = document.createElement("img");
+       img.src = news.articles[0].urlToImage;
+       
+
+       container.append(name,img)
+   }
+   </script>

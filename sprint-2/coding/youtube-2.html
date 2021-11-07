@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube App II</title>
+</head>
+<style>
+    #navbar {
+        display: grid;
+  grid-template-columns: repeat(9, 100px);
+  justify-content: space-between;
+border: 1px gray solid;
+background-color: honeydew;
+vertical-align: middle;
+padding-top: 40px;
+margin-bottom: 40px;
+
+    }
+
+    input {
+        width: 160px;
+        height: 20px;
+    }
+    button {
+        height: 30px;
+        width: 60px;
+    }
+   
+     img {
+        width: 30%;
+    }
+    img:hover {
+        cursor: pointer;
+        color: blue;
+    }
+     #fafa {
+        width:150%;
+    }
+#videos {
+    display: grid;
+    grid-template-columns: repeat(4,24%);
+    grid-gap: 2%;
+}
+
+</style>
+<body>
+    <div id="navbar">
+       <img src="https://www.pngitem.com/pimgs/m/30-302949_menu-bar-icon-png-transparent-png.png"/>
+        <img src="https://images.indianexpress.com/2017/08/youtube_logo_new-759.jpg" id="fafa"/>
+            <input type="text" id="query" placeholder="search for a video">
+            <button onclick="searchVideos()">search</button>
+            <img src="https://static.thenounproject.com/png/2313-200.png"/>
+            <img src="https://icon-library.com/images/white-video-camera-icon/white-video-camera-icon-15.jpg"/>
+            <img src="https://toppng.com/uploads/preview/grid-view-icon-icon-11553414054sph1l0smxi.png"/>
+            <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-bell-512.png"/>
+            <img src="https://www.pngfind.com/pngs/m/93-938050_png-file-transparent-white-user-icon-png-download.png"/>
+           
+
+</div>
+    <div id="videos"></div>
+</body>
+</html>
+<script>
+//AIzaSyC_YjOcQaBHCTKrkWa6aRplV5zQok7zRKw
+
+//https://youtube.googleapis.com/youtube/v3/search?q=csk&type=video&key=[YOUR_API_KEY]
+
+let videos = document.getElementById("videos");
+async function searchVideos(){
+
+    let  query = document.getElementById("query").value
+
+let res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=${query}&type=video&key=AIzaSyC_YjOcQaBHCTKrkWa6aRplV5zQok7zRKw&maxResults=20`);
+
+
+let data = await res.json();
+
+console.log(data)
+
+
+appendVideos(data.items);
+
+}
+
+searchVideos();
+
+
+function appendVideos(video_data) {
+
+    videos.innerHTML = null;
+
+video_data.forEach(({id:{ videoId}}) => {
+
+    let div = document.createElement("div");
+
+    div.innerHTML = `<iframe width="360" height="215" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+
+div.style.marginTop = '20px'
+
+  videos.append(div);
+
+
+});
+
+}
+
+</script>

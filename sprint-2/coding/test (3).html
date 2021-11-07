@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input {
+            width: 200px;
+        }
+        
+        #movies{
+            height: 200px;
+            width: 206px;
+            border: 1px solid black;
+            overflow: scroll;
+            border-top: none;
+            margin: auto;
+            margin-top: 30px;
+            
+        }
+      
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+        
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .topnav a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+        
+        button {
+            float: right;
+            margin: 22px;
+            font-weight: 500;
+            text-transform: uppercase;
+            color: var(--TEXT_COLOR_L1);
+            text-decoration: none;
+            cursor: pointer;
+            color: white;
+            background-color: black;
+            padding: 10px 0;
+            width: 72px;
+        }
+        
+        input#movie {
+            float: left;
+            margin: 22px;
+            margin-left: 52%;
+            height: 30px;
+        }
+        
+      
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="" href="#home">TV</a>
+        <a href="#news">Movies</a>
+        <a href="#contact">Sports</a>
+        <a href="#about">Disney</a>
+
+        <input oninput="debounce(main,3000)" type="text" id="movie" placeholder="enter movie" />
+    </div>
+    <div id="movies"></div>
+
+</body>
+
+</html>
+<script>
+    var timerId;
+    let movies_div = document.getElementById("movies")
+
+    async function searchMovies(movie_name) {
+        try {
+            let res = await fetch(`http://www.omdbapi.com/?apikey=2e11846f&s=${movie_name}`)
+
+            let data = await res.json();
+            return data;
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
+
+    function appendMovies(movies) {
+        if (movies === undefined) {
+            return false
+        }
+        movies_div.innerHTML = null;
+
+        movies.forEach(function(movie) {
+            let p = document.createElement("span");;
+            p.innerText = movie.Title;
+
+          //  let year = document.createElement("p");;
+          //  p.innerText = movie.Year;
+          //  let img = document.createElement('img')
+          //  img.src = movie.Poster;
+            movies_div.append(p);
+        })
+
+    }
+
+    async function main() {
+        let name = document.getElementById("movie").value;
+        if (name.length < 3) {
+            return false;
+        }
+
+        let res = await searchMovies(name);
+        let movie_data = res.Search;
+        // console.log("a", res)
+        appendMovies(movie_data)
+
+        console.log(res)
+
+    }
+
+    function debounce(func, delay) {
+        //ave set time - fun - main() = search movie("ave")
+        //aven = clear time of prev- settime- func()- main()- serch("aven")
+        //fun = main
+
+        if (timerId) {
+            clearTimeout(timerId)
+        }
+        timerId = setTimeout(function() {
+            func();
+        }, delay)
+    }
+    
+</script>
+

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie app II</title>
+    <style>
+   body {
+    
+    text-align: center;
+}
+        input{
+            width: 200px;
+        }
+        #movies{
+            height: 200px;
+            width: 206px;
+            border: 1px solid black;
+            overflow: scroll;
+            border-top: none;
+            margin: auto;
+            margin-top: 30px;
+        }
+        #display {
+            margin-top: 30px;
+            font-size: 24px;
+            font-weight: 500;
+            border: 1px solid grey;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        background-color: honeydew;
+        color: blue;
+        }
+       
+    </style>
+</head>
+<body>
+<h1>Movie App</h1>
+<input oninput="debounce(main,2000)" type="text" id="movie" placeholder="Enter movie name"/>
+<button onclick=" searchMovies()">submit</button>
+
+<div id = "movies"></div>
+<div id ="display"></div>
+</body>
+</html>
+<script>
+
+    var timerId;
+
+ let movies_div = document.getElementById("movies")
+
+let show = document.getElementById("display")
+
+async function searchMovies(movie_name){
+
+try{
+    let res = await fetch(`http://www.omdbapi.com/?apikey=37caec68&s=${movie_name}`)
+
+    let data = await res.json();
+   return data;
+
+} catch(e){
+    console.log(e)
+}
+
+}
+
+
+function appendMovies(movies){
+if(movies === undefined){
+    return false
+}
+movies_div.innerHTML  = null;
+
+movies.forEach(function(movie){
+    let p = document.createElement("p");;
+    p.innerText = movie.Title;
+
+    p.addEventListener("click",function(){
+        clicked(movie);
+        
+    })
+
+    movies_div.append(p);
+})
+
+}
+  function clicked(movie) {
+      movies.innerHTML = null;
+      show.innerHTML = null;
+ // show.style.display = block;
+      let div = document.createElement("div")
+
+      let Title = document.createElement('p');
+            Title.innerHTML = `Title: ${movie.Title}`;
+
+             let rating = document.createElement('p');
+             rating.innerHTML = `Rating: ${movie.imdbID}`;
+
+            let image = document.createElement('img');
+            image.src = movie.Poster;
+            console.log(movie);
+
+            let year = document.createElement('p');
+            year.innerHTML = `Release: ${movie.Year}`;
+
+            let Type = document.createElement('p');
+            Type.innerHTML = `Type: ${movie.Type}`;
+
+            div.append( image,Title,year,rating,Type)
+
+            show.append(div)
+
+          //  console.log(movie.Title,"srinivas")
+
+  }
+
+
+ async function main (){
+    let name = document.getElementById("movie").value;
+
+if(name.length < 3) {
+    return false;
+
+}
+  let res = await searchMovies(name);
+  let movie_data =  res.Search;
+
+  appendMovies(movie_data)
+
+  console.log(res)
+
+}
+
+function debounce(func, delay) {
+ 
+
+    if(timerId) {
+        clearTimeout(timerId)
+    }
+  
+
+ timerId = setTimeout(function() {
+
+func()
+
+}, delay)
+
+}
+</script>
